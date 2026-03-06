@@ -20,11 +20,10 @@ Comme tu m’as demandé de ne plus t’acheter de cadeau mais que je ne peux pa
 
   `Toute tes mimiques trop mignonnes enfait je t’ai tellement observé que je pourrai décrire tout ton langage corporel pendant des heures tellement tu me passionne.`,
 
-  `Merci pour tout ce que tu m’as apporté.\n\n
+  `Je t’aime Mansour, je suis tombée amoureuse de toi, je t’aime d’une manière donc jamais je me serai cru capable d’aimer. Je tiens plus à toi qu’à moi même.`,
 
-Ta hbiba,
-À mon petit bb d’amour.`,
-'<img id="image" src="img/M+N.jpeg" alt="Image"> Notre première photo ensemble on était trop pipouuu.'
+  `Merci pour tout ce que tu m’as apporté.`,
+'<img id="image" src="img/M+N.jpeg" alt="Image"> Notre première photo ensemble on était trop pipouuu. Ta hbiba, À mon petit bb d’amour.'
 ]
 
 // On crée une variable pour stocker notre "chronomètre"
