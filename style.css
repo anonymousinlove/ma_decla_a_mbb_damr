@@ -1,0 +1,346 @@
+/* =========================================
+   1. REGLAGES GLOBAUX & FOND D'ECRAN
+   ========================================= */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  /* La couleur rose de base */
+  background-color: #ffd1dc; 
+  
+  /* On dessine des lignes transparentes et blanches pour faire une grille */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 2px, transparent 2px);
+    
+  /* La taille de chaque petit "carreau" de la grille */
+  background-size: 20px 20px; 
+}
+
+/* =========================================
+   2. LA MISE EN PAGE PRINCIPALE (FLEXBOX)
+   ========================================= */
+.ecran-jeu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Laisse l'espace en haut et en bas pour ne rien superposer */
+  min-height: calc(100vh - 120px); 
+  
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   3. LA BOITE DE DIALOGUE (LA LETTRE)
+   ========================================= */
+.lettre-boite {
+  background-color: #fdf5e6; /* Couleur vieux papier / crème */
+  width: 100%;               /* Prend tout l'espace disponible... */
+  max-width: 600px;          /* ...mais s'arrête à 600px sur ordinateur */
+  padding: 30px;             /* Espace à l'intérieur */
+  
+  border: 4px solid #3e2723; /* Bordure pixel art */
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.2); /* Ombre nette */
+  
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  
+  /* LIGNE OBLIGATOIRE à ajouter : retient le badge, le chat et le cœur ! */
+  position: relative; 
+}
+
+/* LE TITRE H1 */
+h1 {
+  text-align: center;
+  font-family: 'VT323', monospace;
+  color: #3e2723;
+  margin: 0;
+  padding-top: 20px;
+  font-size: 32px;
+}
+
+/* ZONE DE TEXTE DE DIALOGUE */
+#texte-dialogue {
+  font-family: 'VT323', monospace; 
+  font-size: 24px;                 
+  color: #3e2723;                  
+  line-height: 1.5;                
+  min-height: 150px; /* Garde une hauteur fixe même si le texte est court */
+  margin-top: 0;
+}
+
+/* =========================================
+   4. LES BOUTONS
+   ========================================= */
+.boutons-navigation {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 20px;
+}
+
+button {
+  background-color: #ffd1dc; 
+  border: 4px solid #3e2723; 
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: #3e2723;
+  padding: 10px 20px;
+  cursor: pointer; 
+  
+  /* LA MAGIE POUR MOBILE (Point 5) : 
+     Empêche l'iPhone de zoomer quand on tapote vite sur les flèches ! */
+  touch-action: manipulation; 
+}
+
+button:active {
+  transform: translateY(4px); 
+  box-shadow: none;           
+}
+
+/* =========================================
+   5. LE BADGE DE NOM & L'IMAGE
+   ========================================= */
+.badge-nom {
+  position: absolute;
+  top: -15px;         /* Le fait remonter au-dessus de la boîte */
+  left: -4px;         /* L'aligne perfectly avec la bordure gauche */
+  
+  background-color: #d87093; /* Un rose un peu plus foncé pour ressortir */
+  border: 4px solid #3e2723; /* Même bordure que le reste */
+  
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #fdf5e6;     /* Texte clair pour contraster */
+  padding: 2px 15px;
+}
+
+#image-mignonne {
+  position: absolute;
+  width: 60px;                 /* Taille du chat */
+  top: -55px;                  /* Le fait remonter au-dessus de la boîte */
+  
+  /* POSITIONNEMENT : On le colle en haut à droite */
+  right: 10px;
+  
+  image-rendering: pixelated; /* Garde les pixels bien nets */
+}
+
+/* =========================================
+   6. RESPONSIVE DESIGN (POUR LES TELEPHONES)
+   ========================================= */
+/* Ce code ne s'active QUE si l'écran fait moins de 600px de large (ex: iPhone) */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 22px; /* Titre plus petit */
+    padding: 10px;
+  }
+
+  .lettre-boite {
+    padding: 15px; /* On réduit l'espace intérieur pour laisser plus de place au texte */
+    border-width: 3px; /* Bordure légèrement plus fine */
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2); /* Ombre plus petite */
+  }
+
+  #texte-dialogue {
+    font-size: 20px; /* Police un peu plus petite pour que ça rentre bien */
+    min-height: 200px; /* On donne plus de hauteur car le texte va s'enrouler sur plus de lignes */
+  }
+
+  button {
+    padding: 10px 15px;
+    font-size: 18px;
+  }
+  
+  /* On adapte les éléments qui dépassent pour mobile */
+  #image-mignonne {
+    width: 50px;
+    top: -35px;
+  }
+  
+  .badge-nom {
+    font-size: 18px;
+    top: -12px;
+  }
+  
+  /* On adapte le cœur pour mobile */
+  #coeur-initiales {
+    width: 70px; /* Plus petit pour mobile, mais toujours présent */
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* =========================================
+   7. STYLE DE L'IMAGE FINALE (DANS LE JS)
+   ========================================= */
+
+/* On cible l'image par son ID pour qu'elle ait une taille réactive */
+#image {
+  max-width: 100%;       /* L'image ne dépasse JAMAIS la largeur de la lettre */
+  height: auto;          /* Garde les proportions d'origine (pas d'image écrasée) */
+  display: block;        /* Nécessaire pour centrer avec margin: auto */
+  margin: 20px auto;     /* Centre l'image et ajoute de l'espace autour */
+  
+  /* LA LIGNE DU CHEF : Garde les pixels bien nets et carrés si l'image est agrandie */
+  /* image-rendering: pixelated;  */
+  
+  /* Bordure pixel art pour l'image, comme pour la lettre */
+  border: 4px solid #3e2723;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================
+   8. LE FOOTER (SIGNATURE)
+   ========================================= */
+
+footer {
+  text-align: center;
+  font-family: 'VT323', monospace;
+  color: #3e2723;          
+  font-size: 18px;         
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  opacity: 0.7;            
+  
+  /* LIGNE MAGIQUE : on s'assure qu'il est bien repoussé en bas */
+  margin-top: auto; 
+  
+  /* (On a supprimé position: absolute et bottom: 0) */
+}
+
+/* =========================================
+   9. LE HEADER (EN-TÊTE)
+   ========================================= */
+header {
+  text-align: center;
+  font-family: 'VT323', monospace;
+  color: #3e2723;          /* Le même marron que le reste */
+  font-size: 28px;         /* Un peu plus grand que le footer pour faire "Titre" */
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  
+  /* Un petit effet d'ombre sous le texte pour le faire ressortir sur le fond rose */
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+}
+
+/* =========================================
+   10. L'ÉCRAN D'INTRO ET L'ENVELOPPE
+   ========================================= */
+#ecran-intro {
+  position: fixed; /* Reste figé par-dessus tout l'écran */
+  top: 0; left: 0; width: 100%; height: 100%;
+  
+  /* On lui donne le même fond rose quadrillé que le reste du site */
+  background-color: #ffd1dc; 
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 2px, transparent 2px);
+  background-size: 20px 20px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Assure que c'est au-dessus de tout le reste ! */
+  
+  /* L'animation de fondu pour disparaître */
+  transition: opacity 1s ease-in-out; 
+}
+
+.enveloppe-wrapper {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #d87093; /* Rose foncé pour l'enveloppe */
+  border: 4px solid #3e2723;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Le rabat (le triangle du haut) */
+.rabat {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  /* Astuce CSS pour créer un triangle parfait */
+  border-left: 146px solid transparent;
+  border-right: 146px solid transparent;
+  border-top: 100px solid #fbbbb9; /* Rose plus clair pour faire du relief */
+  
+  transform-origin: top; /* Indique que l'animation tourne autour du haut */
+  transition: transform 0.8s ease-in-out; /* Durée de l'ouverture */
+  z-index: 2;
+}
+
+/* Le texte clignotant sous l'enveloppe */
+.texte-cliquez {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: #3e2723;
+  animation: clignote 1.5s infinite;
+}
+
+@keyframes clignote {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* LA CLASSE MAGIQUE QUI OUVRE L'ENVELOPPE */
+.enveloppe-ouverte .rabat {
+  transform: rotateX(180deg); /* Ouvre le rabat vers le haut ! */
+  z-index: 0;
+}
+
+/* Le style de la zone où elle va écrire */
+#champ-reponse {
+  width: 100%;
+  height: 100px;
+  margin-top: 15px;
+  background-color: #ffd1dc; /* Fond rose pour bien différencier de la question */
+  border: 4px solid #3e2723;
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: #3e2723;
+  padding: 10px;
+  box-sizing: border-box;
+  resize: none; /* Empêche d'agrandir la boîte manuellement */
+}
+
+#champ-reponse:focus {
+  outline: none; /* Enlève la bordure bleue de base quand on clique dedans */
+  background-color: #fff; /* Devient blanc quand elle écrit */
+}
+
+/* =========================================
+   11. LE COEUR D'INITIALES M+F
+   ========================================= */
+#coeur-initiales {
+  position: absolute;
+  width: 90px; /* <--- Beaucoup plus gros pour le cheff ! (initialement 50px) */
+  height: auto;
+  
+  /* POSITIONNEMENT : On le colle en bas à droite de la boîte aux lettres */
+  bottom: 25px; /* <--- Collé au bas de la boîte. */
+  right: 25px; /* <--- Collé au bord droit de la boîte. */
+  
+  image-rendering: pixelated; /* Pour le style pixel ! */
+  z-index: 10;
+  animation: pop 0.3s ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
